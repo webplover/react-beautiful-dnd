@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function App() {
@@ -11,12 +11,20 @@ function App() {
 
   const [listData, setListData] = useState(data);
 
+  // update state from localStorage
+  useEffect(() => {
+    if (localStorage.getItem("listData")) {
+      setListData(JSON.parse(localStorage.getItem("listData")));
+    }
+  }, []);
+
   function handleDragEnd(result) {
     if (!result.destination) return;
     const items = listData;
     const [removedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, removedItem);
     setListData(items);
+    localStorage.setItem("listData", JSON.stringify(items));
   }
 
   return (
@@ -28,7 +36,7 @@ function App() {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {data.map((item, index) => (
+            {listData.map((item, index) => (
               <Draggable
                 key={item.id}
                 draggableId={item.id.toString()}
