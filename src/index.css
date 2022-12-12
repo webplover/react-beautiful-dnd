@@ -4,6 +4,7 @@
 }
 
 p {
-  border: 2px solid black;
   padding: 1rem;
+  background-color: pink;
+  margin: 5px 0;
 }

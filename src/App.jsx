@@ -12,7 +12,7 @@ function App() {
   const [listData, setListData] = useState(data);
 
   function handleDragEnd(result) {
-    console.log(result);
+    if (!result.destination) return;
     const items = listData;
     const [removedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, removedItem);
